@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Random Weapon Generator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            text-align: center;
+            background-color: #121212;
+            color: #f0f0f0;
+        }
+
+        h1 {
+            font-size: 36px;
+        }
+
+        select, button {
+            padding: 10px 20px;
+            font-size: 18px;
+            margin-top: 20px;
+            margin-bottom: 20px;
+            background-color: #333;
+            color: #f0f0f0;
+            border: none;
+        }
+
+        #weaponDetails {
+            margin-top: 30px;
+            font-size: 22px;
+            line-height: 1.6;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            padding: 5px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>Random Weapon Generator</h1>
+
+    <label for="weaponClass">Choose Weapon Class:</label>
+    <br>
+    <select id="weaponClass">
+        <option value="LMG">Light Machine Gun (LMG)</option>
+        <option value="SubmachineGun">Submachine Gun</option>
+        <option value="AssaultRifle">Assault Rifle</option>
+        <option value="SniperRifle">Sniper Rifle</option>
+        <option value="Shotgun">Shotgun</option>
+        <option value="Pistol">Pistol</option>
+    </select>
+    <br>
+
+    <button onclick="generateWeapon()">Generate Weapon</button>
+
+    <div id="weaponDetails"></div>
+
+    <script>
+        // Define attributes for weapon generation
+
+        const attachmentMethods = ["Picatinny rail", "KeyMod", "M-LOK", "Dovetail mount", "Weaver rail"];
+        const actionTypes = {
+            LMG: ["Gas-operated", "Recoil-operated", "Blowback"],
+            SubmachineGun: ["Blowback", "Delayed blowback", "Roller-delayed blowback"],
+            AssaultRifle: ["Gas-operated", "Piston-driven", "Direct impingement"],
+            SniperRifle: ["Bolt-action", "Gas-operated", "Recoil-operated"],
+            Shotgun: ["Pump-action", "Semi-automatic", "Lever-action", "Break-action"],
+            Pistol: ["Blowback", "Short recoil", "Long recoil"]
+        };
+
+        const fireRates = {
+            LMG: ["600 RPM", "750 RPM", "850 RPM", "900 RPM"],
+            SubmachineGun: ["600 RPM", "700 RPM", "800 RPM", "1000 RPM"],
+            AssaultRifle: ["600 RPM", "700 RPM", "750 RPM", "900 RPM"],
+            SniperRifle: ["Single shot", "Semi-automatic", "Bolt-action"],
+            Shotgun: ["Single shot", "Semi-automatic", "Pump-action"],
+            Pistol: ["300 RPM", "450 RPM", "600 RPM"]
+        };
+
+        const barrelLengths = {
+            LMG: ["16 inches", "18 inches", "20 inches", "22 inches"],
+            SubmachineGun: ["8 inches", "10 inches", "12 inches"],
+            AssaultRifle: ["14.5 inches", "16 inches", "18 inches", "20 inches"],
+            SniperRifle: ["20 inches", "24 inches", "26 inches"],
+            Shotgun: ["18 inches", "20 inches", "24 inches"],
+            Pistol: ["4 inches", "5 inches", "6 inches"]
+        };
+
+        const feedingMechanisms = {
+            LMG: ["Belt-fed", "Magazine-fed", "Drum magazine"],
+            SubmachineGun: ["Magazine-fed", "Drum magazine"],
+            AssaultRifle: ["Magazine-fed", "Drum magazine"],
+            SniperRifle: ["Magazine-fed", "Internal magazine"],
+            Shotgun: ["Tube-fed", "Magazine-fed"],
+            Pistol: ["Magazine-fed"]
+        };
+
+        // Set caliber limits (width x length) for each weapon class
+        const caliberLimits = {
+            LMG: { minWidth: 5.45, maxWidth: 7.62, minLength: 39, maxLength: 51 },
+            SubmachineGun: { minWidth: 7.62, maxWidth: 10, minLength: 25, maxLength: 45 },
+            AssaultRifle: { minWidth: 5.45, maxWidth: 7.62, minLength: 39, maxLength: 51 },
+            SniperRifle: { minWidth: 7.62, maxWidth: 12.7, minLength: 51, maxLength: 99 },
+            Shotgun: { minWidth: 12, maxWidth: 18.5, minLength: 70, maxLength: 89 },  // Shotguns are handled differently
+            Pistol: { minWidth: 9, maxWidth: 12.7, minLength: 17, maxLength: 55 }
+        };
+
+        // Function to generate random caliber (width x length) based on the weapon class
+        function generateCaliber(classType) {
+            // Get the width and length limits for the selected weapon class
+            const limits = caliberLimits[classType];
+
+            // Generate a random width and length within the defined limits
+            const width = (Math.random() * (limits.maxWidth - limits.minWidth) + limits.minWidth).toFixed(2);
+            const length = (Math.random() * (limits.maxLength - limits.minLength) + limits.minLength).toFixed(1);
+
+            // Return the caliber as a string
+            return `${width}x${length}mm`;
+        }
+
+        // Function to get a random item from an array
+        function getRandomItem(arr) {
+            return arr[Math.floor(Math.random() * arr.length)];
+        }
+
+        // Function to generate a random weapon
+        function generateWeapon() {
+            const weaponClass = document.getElementById("weaponClass").value;
+
+            // Get random attributes based on the selected weapon class
+            const attachmentMethod = getRandomItem(attachmentMethods);
+            const actionType = getRandomItem(actionTypes[weaponClass]);
+            const fireRate = getRandomItem(fireRates[weaponClass]);
+            const caliber = generateCaliber(weaponClass);  // Generate caliber dynamically
+            const barrelLength = getRandomItem(barrelLengths[weaponClass]);
+            const feedingMechanism = getRandomItem(feedingMechanisms[weaponClass]);
+
+            // Display the generated weapon details
+            document.getElementById("weaponDetails").innerHTML = `
+                <h2>Generated ${weaponClass.replace(/([A-Z])/g, ' $1')}:</h2>
+                <ul>
+                    <li><strong>Attachment Method:</strong> ${attachmentMethod}</li>
+                    <li><strong>Action Type:</strong> ${actionType}</li>
+                    <li><strong>Fire Rate:</strong> ${fireRate}</li>
+                    <li><strong>Caliber:</strong> ${caliber}</li>
+                    <li><strong>Barrel Length:</strong> ${barrelLength}</li>
+                    <li><strong>Feeding Mechanism:</strong> ${feedingMechanism}</li>
+                </ul>
+            `;
+        }
+    </script>
+</body>
+</html>
