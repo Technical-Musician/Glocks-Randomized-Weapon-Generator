@@ -119,7 +119,7 @@
 
             // Generate a random width and length within the defined limits
             const width = (Math.random() * (limits.maxWidth - limits.minWidth) + limits.minWidth).toFixed(2);
-            const length = (Math.random() * (limits.maxLength - limits.minLength) + limits.minLength).toFixed(1);
+            const length = Math.floor(Math.random() * (limits.maxLength - limits.minLength) + limits.minLength);
 
             // Return the caliber as a string
             return `${width}x${length}mm`;
