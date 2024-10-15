@@ -114,6 +114,8 @@
             Pistol: { minWidth: 9, maxWidth: 12.7, minLength: 17, maxLength: 55 }
         };
 
+        const furnitureMaterials = ["Polymer", "Wood", "Metal"];
+
         // Function to generate random caliber (width x length) based on the weapon class
         function generateCaliber(classType) {
             // Get the width and length limits for the selected weapon class
@@ -143,6 +145,7 @@
             const caliber = generateCaliber(weaponClass);  // Generate caliber dynamically
             const barrelLength = getRandomItem(barrelLengths[weaponClass]);
             const feedingMechanism = getRandomItem(feedingMechanisms[weaponClass]);
+            const furniture = getRandomItem(furnitureMaterials);
 
             // Display the generated weapon details
             document.getElementById("weaponDetails").innerHTML = `
@@ -154,6 +157,7 @@
                     <li><strong>Caliber:</strong> ${caliber}</li>
                     <li><strong>Barrel Length:</strong> ${barrelLength}</li>
                     <li><strong>Feeding Mechanism:</strong> ${feedingMechanism}</li>
+                    <li><strong>Furniture:</strong> ${furniture}</li> <!-- Add this -->
                 </ul>
             `;
         }
