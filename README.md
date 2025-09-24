@@ -1,4 +1,3 @@
-# glocks-random-weapon-generator
-Personal worldbuilding/artistic inspiration tool. It randomly generates a gun based on what ever class you choose
+# Glockodile's Gun Generator
+make for whatever stuff you need it for
 
-## https://technical-musician.github.io/Glocks-Randomized-Weapon-Generator/
