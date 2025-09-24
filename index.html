@@ -837,7 +837,7 @@
             const barrelLength = getRandomItem(barrelLengths[weaponClass]);
             const feedingMechanism = getRandomItem(feedingMechanisms[weaponClass]);
             const furnitureMaterial = getRandomItem(furnitureMaterials[era]);
-            const firingModes = getRandomItem(firingModes[era]);
+            const selectedFiringModes = getRandomItem(firingModes[era]);
             const sights = getRandomItem(sightOptions[era]);
             
             // Generate description if enabled
@@ -863,7 +863,7 @@
                 actionType,
                 feedingMechanism,
                 furnitureMaterial,
-                firingModes,
+                firingModes: selectedFiringModes,
                 sights,
                 attachmentMethod,
                 description
