@@ -3,113 +3,175 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>generation site 2</title>
+    <title>Enhanced Weapon Generator for World-Building</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             padding: 20px;
             text-align: center;
             background-color: #121212;
             color: #f0f0f0;
+            max-width: 1200px;
+            margin: 0 auto;
         }
 
         h1 {
             font-size: 36px;
             margin-bottom: 10px;
+            color: #e0e0e0;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
         }
 
         .subtitle {
-            font-size: 14px;
+            font-size: 16px;
             color: #aaa;
-            margin-bottom: 20px;
+            margin-bottom: 30px;
+        }
+
+        .generator-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+            margin-bottom: 30px;
+        }
+
+        .control-panel {
+            flex: 1;
+            min-width: 300px;
+            background-color: #1a1a1a;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+        }
+
+        .result-panel {
+            flex: 2;
+            min-width: 300px;
+            background-color: #1a1a1a;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+            text-align: left;
         }
 
         select, button, input {
-            padding: 10px 20px;
-            font-size: 18px;
-            margin-top: 10px;
-            margin-bottom: 10px;
+            padding: 10px 15px;
+            font-size: 16px;
+            margin: 10px 5px;
             background-color: #333;
             color: #f0f0f0;
             border: none;
             border-radius: 5px;
+            width: 100%;
+            box-sizing: border-box;
         }
 
         button {
             cursor: pointer;
-            transition: background-color 0.3s;
+            transition: background-color 0.3s, transform 0.1s;
+            font-weight: bold;
         }
 
         button:hover {
             background-color: #555;
         }
 
-        #weaponDetails {
-            margin-top: 30px;
-            font-size: 22px;
-            line-height: 1.6;
-            text-align: left;
-            max-width: 800px;
-            margin-left: auto;
-            margin-right: auto;
-            padding: 20px;
-            background-color: #1a1a1a;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.5);
+        button:active {
+            transform: scale(0.98);
         }
 
-        img {
-            width: 100%;
-            max-width: 400px;
-            display: block;
-            margin: 20px auto;
-            border-radius: 10px;
-        }
-
-        ul {
-            list-style-type: none;
-            padding: 0;
-        }
-
-        li {
-            padding: 5px 0;
-            border-bottom: 1px solid #333;
-        }
-
-        .weapon-history {
-            background-color: #2a2a2a;
-            padding: 15px;
-            border-radius: 5px;
-            margin-top: 15px;
-        }
-
-        .controls {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 10px;
-            margin-bottom: 20px;
-        }
-
-        .control-group {
-            margin: 0 10px;
-        }
-
-        .save-weapon {
+        .generate-btn {
             background-color: #4CAF50;
-            margin-left: 10px;
         }
 
-        .saved-weapons {
-            margin-top: 20px;
+        .randomize-btn {
+            background-color: #2196F3;
+        }
+
+        .export-btn {
+            background-color: #FF9800;
+        }
+
+        label {
+            display: block;
+            margin: 15px 0 5px;
             text-align: left;
-            max-width: 800px;
-            margin-left: auto;
-            margin-right: auto;
+            font-weight: bold;
         }
 
-        .weapon-item {
-            background-color: #1a1a1a;
+        #weaponDetails {
+            margin-top: 20px;
+            font-size: 18px;
+            line-height: 1.6;
+        }
+
+        .weapon-card {
+            background-color: #252525;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .weapon-name {
+            font-size: 24px;
+            margin-bottom: 15px;
+            color: #e0e0e0;
+            border-bottom: 1px solid #444;
+            padding-bottom: 10px;
+        }
+
+        .weapon-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 15px;
+        }
+
+        .stat-item {
+            background-color: #333;
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        .stat-label {
+            font-weight: bold;
+            color: #aaa;
+            font-size: 14px;
+        }
+
+        .stat-value {
+            font-size: 16px;
+            margin-top: 5px;
+        }
+
+        .weapon-image {
+            width: 100%;
+            height: 200px;
+            background-color: #333;
+            border-radius: 5px;
+            margin: 15px 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #777;
+            font-style: italic;
+        }
+
+        .weapon-description {
+            margin-top: 15px;
+            font-style: italic;
+            color: #ccc;
+            line-height: 1.5;
+        }
+
+        .history-panel {
+            margin-top: 30px;
+            text-align: left;
+        }
+
+        .history-item {
+            background-color: #252525;
             padding: 15px;
             margin: 10px 0;
             border-radius: 5px;
@@ -117,613 +179,791 @@
             transition: background-color 0.3s;
         }
 
-        .weapon-item:hover {
+        .history-item:hover {
             background-color: #2a2a2a;
         }
 
-        .tab {
-            overflow: hidden;
-            border: 1px solid #333;
-            background-color: #1a1a1a;
-            border-radius: 5px;
-            margin-bottom: 20px;
+        .tab-container {
+            margin-top: 20px;
         }
 
-        .tab button {
-            background-color: inherit;
-            float: left;
-            border: none;
-            outline: none;
-            cursor: pointer;
-            padding: 14px 16px;
-            transition: 0.3s;
-            font-size: 17px;
-        }
-
-        .tab button:hover {
-            background-color: #333;
-        }
-
-        .tab button.active {
-            background-color: #444;
-        }
-
-        .tabcontent {
-            display: none;
-            padding: 6px 12px;
-            border-top: none;
-        }
-
-        .weapon-image {
-            width: 200px;
-            height: 150px;
-            background-color: #333;
-            border-radius: 10px;
-            margin: 10px auto;
+        .tabs {
             display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #aaa;
-            font-style: italic;
+            border-bottom: 1px solid #444;
         }
 
-        .weapon-stats {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        .tab {
+            padding: 10px 20px;
+            cursor: pointer;
+            background-color: #2a2a2a;
+            border-radius: 5px 5px 0 0;
+            margin-right: 5px;
+        }
+
+        .tab.active {
+            background-color: #333;
+            border-bottom: 2px solid #4CAF50;
+        }
+
+        .tab-content {
+            display: none;
+            padding: 20px;
+            background-color: #1a1a1a;
+            border-radius: 0 0 5px 5px;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .export-options {
+            display: flex;
             gap: 10px;
             margin-top: 15px;
         }
 
-        .stat-box {
-            background-color: #2a2a2a;
-            padding: 10px;
-            border-radius: 5px;
-            text-align: center;
+        .export-options button {
+            flex: 1;
         }
 
-        .stat-value {
-            font-size: 24px;
-            font-weight: bold;
-            color: #4CAF50;
-        }
-
-        .design-details {
-            background-color: #333;
-            padding: 15px;
-            border-radius: 5px;
-            margin-top: 10px;
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .generator-container {
+                flex-direction: column;
+            }
+            
+            .weapon-stats {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
 <body>
-    <h1>Glock's Advanced Weapon Generator</h1>
-    <div class="subtitle">Create unique firearms for your stories, games, or world-building projects</div>
+    <h1>Enhanced Weapon Generator</h1>
+    <div class="subtitle">Create detailed weapons for your world-building, stories, and art projects</div>
 
-    <img src="assets/source.gif" alt="Weapon reference image">
+    <div class="generator-container">
+        <div class="control-panel">
+            <label for="weaponClass">Weapon Class:</label>
+            <select id="weaponClass">
+                <option value="LMG">Light Machine Gun (LMG)</option>
+                <option value="SubmachineGun">Submachine Gun</option>
+                <option value="AssaultRifle">Assault Rifle</option>
+                <option value="SniperRifle">Sniper Rifle</option>
+                <option value="Shotgun">Shotgun</option>
+                <option value="Pistol">Pistol</option>
+                <option value="BattleRifle">Battle Rifle</option>
+                <option value="DMR">Designated Marksman Rifle (DMR)</option>
+                <option value="Carbine">Carbine</option>
+            </select>
 
-    <div class="tab">
-        <button class="tablinks active" onclick="openTab(event, 'Generator')">Weapon Generator</button>
-        <button class="tablinks" onclick="openTab(event, 'Saved')">Saved Weapons</button>
-        <button class="tablinks" onclick="openTab(event, 'DesignDetails')">Design Details</button>
-    </div>
+            <label for="eraSelect">Era/Technology Level:</label>
+            <select id="eraSelect">
+                <option value="Modern">Modern (2000-Present)</option>
+                <option value="ColdWar">Cold War (1947-1991)</option>
+                <option value="WW2">World War II (1939-1945)</option>
+                <option value="Interwar">Interwar (1918-1939)</option>
+                <option value="WW1">World War I (1914-1918)</option>
+                <option value="PreWW1">Pre-WWI (Before 1914)</option>
+                <option value="NearFuture">Near Future (2025-2040)</option>
+                <option value="FarFuture">Far Future (2040+)</option>
+                <option value="Steampunk">Steampunk</option>
+                <option value="Cyberpunk">Cyberpunk</option>
+                <option value="Fantasy">Fantasy</option>
+            </select>
 
-    <div id="Generator" class="tabcontent" style="display: block;">
-        <div class="controls">
-            <div class="control-group">
-                <label for="weaponClass">Weapon Class:</label><br>
-                <select id="weaponClass">
-                    <option value="LMG">Light Machine Gun (LMG)</option>
-                    <option value="SubmachineGun">Submachine Gun</option>
-                    <option value="AssaultRifle">Assault Rifle</option>
-                    <option value="SniperRifle">Sniper Rifle</option>
-                    <option value="Shotgun">Shotgun</option>
-                    <option value="Pistol">Pistol</option>
-                    <option value="BattleRifle">Battle Rifle</option>
-                    <option value="DMR">Designated Marksman Rifle</option>
-                    <option value="Carbine">Carbine</option>
-                </select>
-            </div>
+            <label for="factionSelect">Faction/Origin:</label>
+            <select id="factionSelect">
+                <option value="Western">Western</option>
+                <option value="Soviet">Soviet/Russian</option>
+                <option value="Asian">Asian</option>
+                <option value="MiddleEastern">Middle Eastern</option>
+                <option value="African">African</option>
+                <option value="SouthAmerican">South American</option>
+                <option value="Mercenary">Mercenary/Non-State</option>
+                <option value="Corporate">Corporate</option>
+                <option value="Alien">Alien/Extraterrestrial</option>
+                <option value="FantasyRace">Fantasy Race</option>
+            </select>
 
-            <div class="control-group">
-                <label for="era">Era:</label><br>
-                <select id="era">
-                    <option value="WW1">World War I</option>
-                    <option value="WW2">World War II</option>
-                    <option value="ColdWar">Cold War</option>
-                    <option value="Modern">Modern</option>
-                    <option value="NearFuture">Near Future</option>
-                    <option value="SciFi">Sci-Fi</option>
-                </select>
-            </div>
+            <label for="raritySelect">Rarity/Quality:</label>
+            <select id="raritySelect">
+                <option value="Common">Common/Mass Produced</option>
+                <option value="Uncommon">Uncommon/Standard Issue</option>
+                <option value="Rare">Rare/Specialized</option>
+                <option value="Elite">Elite/Prototype</option>
+                <option value="Legendary">Legendary/One-of-a-Kind</option>
+                <option value="Artifact">Artifact/Ancient</option>
+            </select>
 
-            <div class="control-group">
-                <label for="origin">Origin:</label><br>
-                <select id="origin">
-                    <option value="Western">Western</option>
-                    <option value="Soviet">Soviet/Russian</option>
-                    <option value="European">European</option>
-                    <option value="Asian">Asian</option>
-                    <option value="MiddleEastern">Middle Eastern</option>
-                    <option value="African">African</option>
-                    <option value="SouthAmerican">South American</option>
-                    <option value="Fictional">Fictional Nation</option>
-                </select>
-            </div>
+            <label for="weaponName">Custom Name (Optional):</label>
+            <input type="text" id="weaponName" placeholder="Enter a custom name for your weapon">
 
-            <div class="control-group">
-                <label for="manufacturer">Manufacturer:</label><br>
-                <input type="text" id="manufacturer" placeholder="Optional">
-            </div>
+            <button class="generate-btn" onclick="generateWeapon()">Generate Weapon</button>
+            <button class="randomize-btn" onclick="randomizeAll()">Randomize All</button>
+            <button class="export-btn" onclick="showExportOptions()">Export Weapon</button>
         </div>
 
-        <div class="controls">
-            <div class="control-group">
-                <label for="weaponName">Weapon Name:</label><br>
-                <input type="text" id="weaponName" placeholder="Optional">
+        <div class="result-panel">
+            <div id="weaponDetails">
+                <p>Select options and click "Generate Weapon" to create your custom firearm.</p>
             </div>
-
-            <div class="control-group">
-                <label for="designPhilosophy">Design Philosophy:</label><br>
-                <select id="designPhilosophy">
-                    <option value="Standard">Standard</option>
-                    <option value="Lightweight">Lightweight</option>
-                    <option value="HeavyDuty">Heavy Duty</option>
-                    <option value="Modular">Modular</option>
-                    <option value="Stealth">Stealth</option>
-                    <option value="CostEffective">Cost Effective</option>
-                    <option value="Precision">Precision</option>
-                    <option value="Reliability">Reliability</option>
-                </select>
-            </div>
-        </div>
-
-        <button onclick="generateWeapon()">Generate Weapon</button>
-        <button onclick="randomizeAll()" style="background-color: #2196F3;">Randomize All</button>
-        <button class="save-weapon" onclick="saveWeapon()">Save Weapon</button>
-    </div>
-
-    <div id="Saved" class="tabcontent">
-        <h2>Saved Weapons</h2>
-        <div id="savedWeapons" class="saved-weapons">
-            <!-- Saved weapons will appear here -->
         </div>
     </div>
 
-    <div id="DesignDetails" class="tabcontent">
-        <h2>Weapon Design Details</h2>
-        <div id="designDetailsContainer">
-            <p>Generate a weapon first to see design details.</p>
+    <div class="tab-container">
+        <div class="tabs">
+            <div class="tab active" onclick="switchTab('history')">Generation History</div>
+            <div class="tab" onclick="switchTab('export')">Export Options</div>
+            <div class="tab" onclick="switchTab('settings')">Generator Settings</div>
+        </div>
+        
+        <div id="history-tab" class="tab-content active">
+            <h3>Recently Generated Weapons</h3>
+            <div id="weaponHistory"></div>
+        </div>
+        
+        <div id="export-tab" class="tab-content">
+            <h3>Export Your Weapon</h3>
+            <p>Choose how you'd like to export your weapon data:</p>
+            <div class="export-options">
+                <button onclick="exportAsText()">Export as Text</button>
+                <button onclick="exportAsJSON()">Export as JSON</button>
+                <button onclick="generateWeaponCard()">Generate Weapon Card</button>
+            </div>
+            <div id="exportResult"></div>
+        </div>
+        
+        <div id="settings-tab" class="tab-content">
+            <h3>Generator Settings</h3>
+            <label>
+                <input type="checkbox" id="enableDescriptions" checked> 
+                Generate detailed descriptions
+            </label>
+            <br>
+            <label>
+                <input type="checkbox" id="enableHistory" checked> 
+                Save generation history
+            </label>
+            <br>
+            <label>
+                <input type="range" id="detailLevel" min="1" max="5" value="3">
+                Detail Level: <span id="detailLevelValue">3</span>
+            </label>
         </div>
     </div>
-
-    <div id="weaponDetails"></div>
 
     <script>
-        // Expanded weapon data
-        const weaponData = {
-            // Caliber data (width x length in mm)
-            calibers: {
-                LMG: ["5.56x45mm NATO", "7.62x51mm NATO", "7.62x54mmR", "12.7x99mm", "5.45x39mm", "7.62x39mm"],
-                SubmachineGun: ["9x19mm Parabellum", ".45 ACP", "5.7x28mm", "4.6x30mm", ".40 S&W", "10mm Auto"],
-                AssaultRifle: ["5.56x45mm NATO", "7.62x39mm", "5.45x39mm", "6.5mm Grendel", "6.8mm Remington SPC"],
-                SniperRifle: [".308 Winchester", ".300 Winchester Magnum", ".338 Lapua Magnum", ".50 BMG", "6.5mm Creedmoor"],
-                Shotgun: ["12 Gauge", "20 Gauge", ".410 Bore", "10 Gauge"],
-                Pistol: ["9x19mm Parabellum", ".45 ACP", ".40 S&W", "10mm Auto", ".357 SIG", ".44 Magnum"],
-                BattleRifle: ["7.62x51mm NATO", ".30-06 Springfield", "7.92x57mm Mauser", "6.5x55mm Swedish"],
-                DMR: ["7.62x51mm NATO", "6.5mm Creedmoor", ".300 Winchester Magnum", "7.62x54mmR"],
-                Carbine: ["5.56x45mm NATO", "7.62x39mm", "9x19mm Parabellum", "5.7x28mm"]
-            },
-            
-            // Magazine capacities
-            magazineCapacities: {
-                LMG: [100, 200, 50, 75, 150],
-                SubmachineGun: [30, 32, 25, 40, 50],
-                AssaultRifle: [30, 20, 40, 60, 100],
-                SniperRifle: [5, 10, 7, 20, 4],
-                Shotgun: [5, 7, 8, 10, 12],
-                Pistol: [15, 17, 10, 12, 19],
-                BattleRifle: [20, 10, 30, 25],
-                DMR: [10, 20, 15, 25],
-                Carbine: [30, 20, 40, 50]
-            },
-            
-            // Barrel lengths
-            barrelLengths: {
-                LMG: ["16 inches", "18 inches", "20 inches", "22 inches", "24 inches"],
-                SubmachineGun: ["5 inches", "6 inches", "8 inches", "10 inches", "12 inches"],
-                AssaultRifle: ["14.5 inches", "16 inches", "18 inches", "20 inches"],
-                SniperRifle: ["20 inches", "24 inches", "26 inches", "28 inches", "30 inches"],
-                Shotgun: ["18 inches", "20 inches", "24 inches", "26 inches", "28 inches"],
-                Pistol: ["3 inches", "4 inches", "5 inches", "6 inches"],
-                BattleRifle: ["20 inches", "22 inches", "24 inches"],
-                DMR: ["18 inches", "20 inches", "22 inches"],
-                Carbine: ["10 inches", "12 inches", "14 inches", "16 inches"]
-            },
-            
-            // Action types
-            actionTypes: {
-                LMG: ["Gas-operated", "Recoil-operated", "Blowback"],
-                SubmachineGun: ["Blowback", "Delayed blowback", "Roller-delayed blowback", "Gas-operated"],
-                AssaultRifle: ["Gas-operated", "Piston-driven", "Direct impingement"],
-                SniperRifle: ["Bolt-action", "Gas-operated", "Recoil-operated", "Lever-action"],
-                Shotgun: ["Pump-action", "Semi-automatic", "Lever-action", "Break-action"],
-                Pistol: ["Blowback", "Short recoil", "Long recoil", "Gas-delayed blowback"],
-                BattleRifle: ["Gas-operated", "Piston-driven", "Recoil-operated"],
-                DMR: ["Bolt-action", "Gas-operated", "Recoil-operated"],
-                Carbine: ["Gas-operated", "Blowback", "Piston-driven"]
-            },
-            
-            // Fire rates
-            fireRates: {
-                LMG: ["600 RPM", "750 RPM", "850 RPM", "900 RPM", "1000 RPM"],
-                SubmachineGun: ["600 RPM", "700 RPM", "800 RPM", "900 RPM", "1000 RPM"],
-                AssaultRifle: ["600 RPM", "700 RPM", "750 RPM", "800 RPM", "900 RPM"],
-                SniperRifle: ["Single shot", "Semi-automatic", "Bolt-action"],
-                Shotgun: ["Single shot", "Semi-automatic", "Pump-action"],
-                Pistol: ["Semi-automatic", "Double-action", "Single-action"],
-                BattleRifle: ["Semi-automatic", "Selective fire"],
-                DMR: ["Semi-automatic", "Bolt-action"],
-                Carbine: ["Semi-automatic", "Selective fire", "Full-auto"]
-            },
-            
-            // Feeding mechanisms
-            feedingMechanisms: {
-                LMG: ["Belt-fed", "Magazine-fed", "Drum magazine"],
-                SubmachineGun: ["Magazine-fed", "Drum magazine"],
-                AssaultRifle: ["Magazine-fed", "Drum magazine"],
-                SniperRifle: ["Magazine-fed", "Internal magazine", "Stripper clip"],
-                Shotgun: ["Tube-fed", "Magazine-fed", "Drum magazine"],
-                Pistol: ["Magazine-fed"],
-                BattleRifle: ["Magazine-fed", "En-bloc clip"],
-                DMR: ["Magazine-fed", "Internal magazine"],
-                Carbine: ["Magazine-fed", "Drum magazine"]
-            },
-            
-            // Furniture materials
-            furnitureMaterials: ["Polymer", "Wood", "Metal", "Carbon fiber", "Composite", "Bakelite"],
-            
-            // Attachment methods
-            attachmentMethods: ["Picatinny rail", "KeyMod", "M-LOK", "Soviet Dovetail", "Weaver rail", "Integrated", "Proprietary"],
-            
-            // Weapon weights (in pounds)
-            weights: {
-                LMG: [15, 18, 22, 25, 30],
-                SubmachineGun: [5, 6, 7, 8, 10],
-                AssaultRifle: [6, 7, 8, 9, 10],
-                SniperRifle: [10, 12, 15, 18, 25],
-                Shotgun: [6, 7, 8, 9, 10],
-                Pistol: [1.5, 2, 2.5, 3],
-                BattleRifle: [9, 10, 11, 12],
-                DMR: [8, 9, 10, 12],
-                Carbine: [5, 6, 7, 8]
-            },
-            
-            // Effective ranges (in meters)
-            effectiveRanges: {
-                LMG: [800, 1000, 1200, 1500],
-                SubmachineGun: [50, 100, 150, 200],
-                AssaultRifle: [300, 400, 500, 600],
-                SniperRifle: [800, 1000, 1500, 2000],
-                Shotgun: [40, 50, 60, 70],
-                Pistol: [25, 50, 75, 100],
-                BattleRifle: [500, 600, 800, 1000],
-                DMR: [600, 800, 1000, 1200],
-                Carbine: [200, 300, 400, 500]
-            },
-            
-            // Design philosophies
-            designPhilosophies: {
-                Standard: ["Balanced design", "Conventional approach", "Traditional manufacturing"],
-                Lightweight: ["Advanced materials", "Minimalist design", "Weight-saving features"],
-                HeavyDuty: ["Reinforced components", "Overbuilt construction", "Durability-focused"],
-                Modular: ["Interchangeable parts", "Rail systems", "Customization options"],
-                Stealth: ["Reduced noise", "Minimal flash", "Non-reflective surfaces"],
-                CostEffective: ["Simplified design", "Mass production", "Minimal machining"],
-                Precision: ["Tight tolerances", "Match-grade barrel", "Accurate by design"],
-                Reliability: ["Overgassed system", "Robust components", "Simplified operation"]
-            },
-            
-            // Origin-based naming conventions
-            namingConventions: {
-                Western: {
-                    prefixes: ["M", "MK", "XM", "AR", "SR", "HK", "FN", "Colt", "Remington", "Winchester"],
-                    suffixes: ["A1", "A2", "A3", "A4", "Special", "Tactical", "Precision", "Advanced"]
-                },
-                Soviet: {
-                    prefixes: ["AK", "PK", "SVD", "RPK", "PP", "TT", "Makarov", "Dragunov", "Saiga", "Vepr"],
-                    suffixes: ["M", "N", "S", "U", "74", "47", "103", "12", "15", "200"]
-                },
-                European: {
-                    prefixes: ["G", "SG", "AUG", "FAMAS", "L85", "G36", "MP", "USP", "P", "CZ"],
-                    suffixes: ["A1", "A2", "K", "C", "Compact", "SD", "T", "E", "N"]
-                },
-                Asian: {
-                    prefixes: ["Type", "Howa", "Daewoo", "Norinco", "QBZ", "Type", "JS", "QBU", "QCW"],
-                    suffixes: ["56", "81", "95", "97", "03", "19", "20", "191", "192"]
-                },
-                MiddleEastern: {
-                    prefixes: ["Al", "Bab", "Khalid", "Tabuk", "Hakim", "Rashid", "Cairo", "Cedar"],
-                    suffixes: ["1", "2", "3", "A", "B", "Special", "Commando", "Desert"]
-                },
-                African: {
-                    prefixes: ["R", "B", "Mamba", "Lion", "Rhino", "Baobab", "Savannah", "Kalahari"],
-                    suffixes: ["Mk1", "Mk2", "Mk3", "A", "B", "C", "Special", "Hunter"]
-                },
-                SouthAmerican: {
-                    prefixes: ["FM", "IMBEL", "Pindad", "FAMAE", "Mendoza", "Rosario", "Amazon", "Andes"],
-                    suffixes: ["A", "B", "C", "1", "2", "3", "Special", "Tropical"]
-                },
-                Fictional: {
-                    prefixes: ["Omega", "Nova", "Cygnus", "Vortex", "Apex", "Zenith", "Orion", "Phoenix"],
-                    suffixes: ["X", "Z", "Prime", "Ultra", "Max", "Pro", "Elite", "Titan"]
-                }
-            }
+        // Enhanced weapon attributes for world-building
+        const attachmentMethods = {
+            Modern: ["Picatinny rail", "KeyMod", "M-LOK", "1913 Rail", "Integrated mounting system"],
+            ColdWar: ["Weaver rail", "Soviet Dovetail", "Claw mount", "Drilled and tapped receiver"],
+            WW2: ["Drilled and tapped", "Clamp-on mount", "Integrated base", "Sight rail"],
+            Interwar: ["Drilled receiver", "Clamp mount", "Integrated sights"],
+            WW1: ["Drilled receiver", "Custom fabrication", "Integrated iron sights"],
+            PreWW1: ["Custom fabrication", "Integrated iron sights", "No attachment points"],
+            NearFuture: ["Smart rail system", "Magnetic attachment", "Integrated targeting system"],
+            FarFuture: ["Neural interface", "Holographic projection", "Molecular bonding"],
+            Steampunk: ["Brass fittings", "Gear-driven mounts", "Pressure-clamp system"],
+            Cyberpunk: ["Cyberware interface", "Smartlink system", "Neural jack"],
+            Fantasy: ["Magic enchantment", "Runic engraving", "Ancient mounting techniques"]
         };
 
-        // Historical context for different eras
-        const eraContext = {
-            WW1: "Developed during the Great War, this weapon reflects the technological limitations and tactical needs of trench warfare.",
-            WW2: "A product of the Second World War, this firearm was designed for the mass armies and diverse combat environments of the conflict.",
-            ColdWar: "Created during the tense standoff between superpowers, this weapon embodies the technological race and proxy wars of the era.",
-            Modern: "A contemporary design leveraging current materials science and manufacturing techniques for today's battlefield.",
-            NearFuture: "Pushing the boundaries of current technology, this weapon incorporates advanced materials and electronic systems.",
-            SciFi: "A futuristic design that may include energy weapons, smart targeting systems, or other advanced technologies."
+        const actionTypes = {
+            LMG: ["Gas-operated", "Recoil-operated", "Blowback", "Short-stroke piston", "Long-stroke piston"],
+            SubmachineGun: ["Blowback", "Delayed blowback", "Roller-delayed blowback", "Gas-operated", "Radial delayed blowback"],
+            AssaultRifle: ["Gas-operated", "Piston-driven", "Direct impingement", "Short-stroke piston", "Long-stroke piston"],
+            SniperRifle: ["Bolt-action", "Gas-operated", "Recoil-operated", "Lever-action", "Falling block"],
+            Shotgun: ["Pump-action", "Semi-automatic", "Lever-action", "Break-action", "Bolt-action", "Revolver"],
+            Pistol: ["Blowback", "Short recoil", "Long recoil", "Gas-delayed blowback", "Toggle-lock"],
+            BattleRifle: ["Gas-operated", "Piston-driven", "Recoil-operated", "Falling block"],
+            DMR: ["Gas-operated", "Bolt-action", "Piston-driven", "Short-stroke piston"],
+            Carbine: ["Gas-operated", "Piston-driven", "Blowback", "Direct impingement"]
         };
 
-        // Function to get random item from array
+        const fireRates = {
+            LMG: ["600 RPM", "750 RPM", "850 RPM", "900 RPM", "1000 RPM", "1200 RPM"],
+            SubmachineGun: ["600 RPM", "700 RPM", "800 RPM", "900 RPM", "1000 RPM", "1200 RPM"],
+            AssaultRifle: ["600 RPM", "700 RPM", "750 RPM", "800 RPM", "900 RPM"],
+            SniperRifle: ["Single shot", "Semi-automatic", "Bolt-action (15-30 RPM)"],
+            Shotgun: ["Single shot", "Semi-automatic", "Pump-action (20-40 RPM)"],
+            Pistol: ["300 RPM", "450 RPM", "600 RPM", "900 RPM", "1200 RPM"],
+            BattleRifle: ["500 RPM", "600 RPM", "650 RPM", "Semi-automatic only"],
+            DMR: ["Semi-automatic", "Bolt-action (15-30 RPM)"],
+            Carbine: ["600 RPM", "700 RPM", "800 RPM", "900 RPM"]
+        };
+
+        const barrelLengths = {
+            LMG: ["16 inches", "18 inches", "20 inches", "22 inches", "24 inches"],
+            SubmachineGun: ["4 inches", "5 inches", "6 inches", "8 inches", "10 inches", "12 inches"],
+            AssaultRifle: ["10 inches", "12 inches", "14.5 inches", "16 inches", "18 inches", "20 inches"],
+            SniperRifle: ["20 inches", "22 inches", "24 inches", "26 inches", "28 inches", "30 inches"],
+            Shotgun: ["14 inches", "16 inches", "18 inches", "20 inches", "22 inches", "24 inches", "26 inches", "28 inches"],
+            Pistol: ["3 inches", "4 inches", "5 inches", "6 inches", "7 inches", "8 inches"],
+            BattleRifle: ["16 inches", "18 inches", "20 inches", "22 inches"],
+            DMR: ["18 inches", "20 inches", "22 inches", "24 inches"],
+            Carbine: ["10 inches", "12 inches", "14 inches", "16 inches"]
+        };
+
+        const feedingMechanisms = {
+            LMG: ["Belt-fed", "Magazine-fed", "Drum magazine", "Pan magazine", "Strip-fed"],
+            SubmachineGun: ["Box magazine", "Stick magazine", "Drum magazine", "Helical magazine"],
+            AssaultRifle: ["Box magazine", "Drum magazine", "Casket magazine"],
+            SniperRifle: ["Box magazine", "Internal magazine", "Clip-fed", "Single shot"],
+            Shotgun: ["Tube-fed", "Box magazine", "Drum magazine", "Single shot"],
+            Pistol: ["Box magazine", "Stick magazine", "Internal magazine", "Cylinder"],
+            BattleRifle: ["Box magazine", "Internal magazine", "Clip-fed"],
+            DMR: ["Box magazine", "Internal magazine", "Clip-fed"],
+            Carbine: ["Box magazine", "Drum magazine", "Stick magazine"]
+        };
+
+        // Enhanced caliber limits with more specific ranges
+        const caliberLimits = {
+            LMG: { minWidth: 5.56, maxWidth: 7.62, minLength: 45, maxLength: 63 },
+            SubmachineGun: { minWidth: 9, maxWidth: 10, minLength: 19, maxLength: 25 },
+            AssaultRifle: { minWidth: 5.45, maxWidth: 7.62, minLength: 39, maxLength: 51 },
+            SniperRifle: { minWidth: 7.62, maxWidth: 14.5, minLength: 51, maxLength: 108 },
+            Shotgun: { minWidth: 4, maxWidth: 10, minLength: 70, maxLength: 89 },
+            Pistol: { minWidth: 9, maxWidth: 12.7, minLength: 19, maxLength: 33 },
+            BattleRifle: { minWidth: 7.62, maxWidth: 8, minLength: 51, maxLength: 63 },
+            DMR: { minWidth: 6.5, maxWidth: 7.62, minLength: 47, maxLength: 67 },
+            Carbine: { minWidth: 5.56, maxWidth: 7.62, minLength: 35, maxLength: 45 }
+        };
+
+        const furnitureMaterials = {
+            Modern: ["Polymer", "Reinforced polymer", "Aluminum alloy", "Carbon fiber", "Titanium"],
+            ColdWar: ["Wood", "Polymer", "Bakelite", "Steel", "Aluminum"],
+            WW2: ["Wood", "Laminated wood", "Steel", "Bakelite"],
+            Interwar: ["Wood", "Steel", "Brass"],
+            WW1: ["Wood", "Steel"],
+            PreWW1: ["Wood", "Brass", "Steel"],
+            NearFuture: ["Polymer composite", "Carbon nanotube", "Smart material", "Ceramic composite"],
+            FarFuture: ["Nanomaterial", "Liquid metal", "Energy field", "Biological composite"],
+            Steampunk: ["Polished wood", "Brass", "Copper", "Leather"],
+            Cyberpunk: ["Polymer", "Chrome", "Neon-accented composite", "Smart material"],
+            Fantasy: ["Ancient wood", "Bone", "Stone", "Mythril", "Dragon scale"]
+        };
+
+        // New features for world-building
+        const magazineCapacities = {
+            LMG: { min: 50, max: 200 },
+            SubmachineGun: { min: 20, max: 50 },
+            AssaultRifle: { min: 20, max: 40 },
+            SniperRifle: { min: 5, max: 20 },
+            Shotgun: { min: 4, max: 12 },
+            Pistol: { min: 6, max: 20 },
+            BattleRifle: { min: 10, max: 30 },
+            DMR: { min: 10, max: 25 },
+            Carbine: { min: 20, max: 40 }
+        };
+
+        const weaponWeights = {
+            LMG: { min: 7.0, max: 12.0 },
+            SubmachineGun: { min: 2.0, max: 4.0 },
+            AssaultRifle: { min: 3.0, max: 5.0 },
+            SniperRifle: { min: 4.0, max: 8.0 },
+            Shotgun: { min: 3.0, max: 5.0 },
+            Pistol: { min: 0.7, max: 1.5 },
+            BattleRifle: { min: 4.0, max: 6.0 },
+            DMR: { min: 4.5, max: 7.0 },
+            Carbine: { min: 2.5, max: 4.5 }
+        };
+
+        const effectiveRanges = {
+            LMG: { min: 600, max: 1500 },
+            SubmachineGun: { min: 50, max: 200 },
+            AssaultRifle: { min: 300, max: 600 },
+            SniperRifle: { min: 800, max: 2000 },
+            Shotgun: { min: 40, max: 100 },
+            Pistol: { min: 25, max: 100 },
+            BattleRifle: { min: 500, max: 800 },
+            DMR: { min: 600, max: 1000 },
+            Carbine: { min: 200, max: 500 }
+        };
+
+        const firingModes = {
+            Modern: ["Safe/Semi/Auto", "Safe/Semi/Burst", "Safe/Semi/Burst/Auto", "Safe/Semi", "Selectorless (Semi-only)"],
+            ColdWar: ["Safe/Semi/Auto", "Safe/Semi", "Selectorless (Semi-only)", "Safe/Auto"],
+            WW2: ["Safe/Semi", "Safe/Auto", "Selectorless (Semi-only)"],
+            Interwar: ["Safe/Semi", "Selectorless (Semi-only)"],
+            WW1: ["Safe/Semi", "Selectorless (Semi-only)"],
+            PreWW1: ["Selectorless (Semi-only)", "Manual action only"],
+            NearFuture: ["Neural selection", "Voice command", "Smart targeting system", "Safe/Semi/Auto/Burst"],
+            FarFuture: ["Thought-activated", "AI-assisted targeting", "Multiple simultaneous modes"],
+            Steampunk: ["Manual selection lever", "Pressure-based selection", "Gear-driven selector"],
+            Cyberpunk: ["Cyberware interface", "Smartlink system", "Neural selection"],
+            Fantasy: ["Mana-based activation", "Runic selection", "Will-powered"]
+        };
+
+        const sightOptions = {
+            Modern: ["Iron sights", "Red dot sight", "Holographic sight", "Low-power variable optic", "High-power scope", "Thermal sight"],
+            ColdWar: ["Iron sights", "Telescopic sight", "Reflex sight", "Night vision scope"],
+            WW2: ["Iron sights", "Telescopic sight", "Aperture sight"],
+            Interwar: ["Iron sights", "Telescopic sight"],
+            WW1: ["Iron sights", "Telescopic sight"],
+            PreWW1: ["Iron sights", "Open sights"],
+            NearFuture: ["Smart sight with HUD", "Integrated thermal/optical", "Augmented reality overlay"],
+            FarFuture: ["Holographic display", "Neural targeting", "Multispectral imaging"],
+            Steampunk: ["Brass telescopic sight", "Gear-driven adjustable sights", "Monocle targeting lens"],
+            Cyberpunk: ["Cyberware HUD", "Smartlink interface", "Targeting cyberware"],
+            Fantasy: ["Crystal lens", "Enchanted scope", "Divine guidance"]
+        };
+
+        const manufacturerNames = {
+            Western: ["Colt", "Heckler & Koch", "FN Herstal", "SIG Sauer", "Beretta", "Glock", "Smith & Wesson", "Ruger", "Springfield Armory"],
+            Soviet: ["Kalashnikov Concern", "Izhmash", "Molot", "Tula Arms Plant", "Degtyaryov Plant", "KBP Instrument Design Bureau"],
+            Asian: ["Norinco", "Howa", "Daewoo", "Type", "Jianshe", "Poly Technologies"],
+            MiddleEastern: ["Al-Kadesih", "Shakir", "Al-Quds", "Defense Industries Organization", "Military Industry Corporation"],
+            African: ["Denel", "Lyttleton Engineering", "NIROP", "PRIDE", "Military Industry Corporation of Ethiopia"],
+            SouthAmerican: ["IMBEL", "FAMAE", "DGFM", "Indumil", "CBC"],
+            Mercenary: ["Valkyrie Dynamics", "Aegis Armaments", "Cerberus Tactical", "Phoenix Group", "Blackwater Armory"],
+            Corporate: ["OmniCorp Arms", "Weyland-Yutani", "Tyrell Corporation", "UAC", "Manticore Arms"],
+            Alien: ["Xenotech", "Vorlon Arms", "Asgard Systems", "Prothean Foundry", "Forerunner Fabrication"],
+            FantasyRace: ["Dwarven Forge", "Elven Crafters", "Orcish Smiths", "Gnomish Inventors", "Draconic Artisans"]
+        };
+
+        // Weapon history storage
+        let weaponHistory = [];
+
+        // Function to get a random item from an array
         function getRandomItem(arr) {
             return arr[Math.floor(Math.random() * arr.length)];
         }
 
-        // Function to generate a weapon name based on origin
-        function generateWeaponName(origin, weaponClass) {
-            const conventions = weaponData.namingConventions[origin];
-            const prefix = getRandomItem(conventions.prefixes);
-            const suffix = getRandomItem(conventions.suffixes);
-            const number = Math.floor(Math.random() * 1000);
-            
-            // Special handling for fictional names
-            if (origin === "Fictional") {
-                return `${prefix} ${suffix}`;
-            }
-            
-            return `${prefix}-${number}${suffix}`;
+        // Function to generate random number within range
+        function getRandomInRange(min, max, decimals = 1) {
+            return (Math.random() * (max - min) + min).toFixed(decimals);
         }
 
-        // Function to generate weapon history/background
-        function generateWeaponHistory(era, origin, weaponClass, manufacturer, designPhilosophy) {
-            const eraDesc = eraContext[era];
-            const philosophy = getRandomItem(weaponData.designPhilosophies[designPhilosophy]);
-            
-            let history = `${eraDesc} `;
-            
-            if (manufacturer) {
-                history += `Manufactured by ${manufacturer}, `;
-            } else {
-                history += `Produced in the ${origin} design tradition, `;
-            }
-            
-            history += `this ${weaponClass.replace(/([A-Z])/g, ' $1').toLowerCase()} features ${philosophy.toLowerCase()}. `;
-            
-            // Add some flavor text based on era and origin
-            if (era === "WW1" || era === "WW2") {
-                history += "Its design reflects the industrial manufacturing capabilities and tactical doctrines of its time.";
-            } else if (era === "ColdWar") {
-                history += "It was likely deployed in various proxy conflicts and influenced by the ideological struggle of the era.";
-            } else if (era === "Modern") {
-                history += "It incorporates modern ergonomics and modularity for today's versatile combat requirements.";
-            } else if (era === "NearFuture") {
-                history += "Advanced materials and integrated systems give this weapon capabilities beyond current standards.";
-            } else if (era === "SciFi") {
-                history += "This weapon represents a leap forward in firearms technology, possibly incorporating energy-based or smart projectile systems.";
-            }
-            
-            return history;
+        // Function to generate random caliber based on weapon class
+        function generateCaliber(classType) {
+            const limits = caliberLimits[classType];
+            const width = getRandomInRange(limits.minWidth, limits.maxWidth, 2);
+            const length = Math.floor(Math.random() * (limits.maxLength - limits.minLength) + limits.minLength);
+            return `${width}x${length}mm`;
         }
 
-        // Function to open tabs
-        function openTab(evt, tabName) {
-            var i, tabcontent, tablinks;
-            tabcontent = document.getElementsByClassName("tabcontent");
-            for (i = 0; i < tabcontent.length; i++) {
-                tabcontent[i].style.display = "none";
+        // Function to generate magazine capacity
+        function generateMagazineCapacity(classType) {
+            const limits = magazineCapacities[classType];
+            return Math.floor(Math.random() * (limits.max - limits.min) + limits.min);
+        }
+
+        // Function to generate weapon weight
+        function generateWeaponWeight(classType) {
+            const limits = weaponWeights[classType];
+            return getRandomInRange(limits.min, limits.max, 1);
+        }
+
+        // Function to generate effective range
+        function generateEffectiveRange(classType) {
+            const limits = effectiveRanges[classType];
+            return Math.floor(Math.random() * (limits.max - limits.min) + limits.min);
+        }
+
+        // Function to generate a weapon name
+        function generateWeaponName(faction, classType, rarity) {
+            const manufacturers = manufacturerNames[faction] || manufacturerNames.Western;
+            const manufacturer = getRandomItem(manufacturers);
+            
+            // Model numbers/names based on class and rarity
+            const modelPrefixes = {
+                LMG: ["M", "MG", "LMG", "SAW"],
+                SubmachineGun: ["SMG", "MP", "UZI", "PP"],
+                AssaultRifle: ["AR", "M", "AK", "CAR"],
+                SniperRifle: ["SR", "M", "SVD", "PSG"],
+                Shotgun: ["SG", "M", "KSG", "MCS"],
+                Pistol: ["P", "M", "MK", "HP"],
+                BattleRifle: ["BR", "M", "FAL", "G3"],
+                DMR: ["DMR", "M", "SDM", "RECCE"],
+                Carbine: ["CAR", "M", "CQBR", "PDW"]
+            };
+            
+            const prefixes = modelPrefixes[classType] || ["M", "X"];
+            const prefix = getRandomItem(prefixes);
+            
+            // Different numbering based on rarity
+            let modelNumber;
+            switch(rarity) {
+                case "Common": modelNumber = Math.floor(Math.random() * 100) + 1; break;
+                case "Uncommon": modelNumber = Math.floor(Math.random() * 50) + 100; break;
+                case "Rare": modelNumber = Math.floor(Math.random() * 20) + 200; break;
+                case "Elite": modelNumber = Math.floor(Math.random() * 10) + 300; break;
+                case "Legendary": modelNumber = Math.floor(Math.random() * 5) + 400; break;
+                case "Artifact": modelNumber = "Ancient"; break;
+                default: modelNumber = Math.floor(Math.random() * 100) + 1;
             }
-            tablinks = document.getElementsByClassName("tablinks");
-            for (i = 0; i < tablinks.length; i++) {
-                tablinks[i].className = tablinks[i].className.replace(" active", "");
+            
+            return `${manufacturer} ${prefix}${modelNumber}`;
+        }
+
+        // Function to generate a weapon description
+        function generateWeaponDescription(weaponData) {
+            const { name, class: classType, caliber, weight, effectiveRange, magazineCapacity, era, rarity, faction } = weaponData;
+            
+            const eraDescriptions = {
+                Modern: "A contemporary firearm designed for modern combat scenarios",
+                ColdWar: "A relic from the tense standoff between superpowers",
+                WW2: "A historic weapon that saw action in the great war",
+                Interwar: "A transitional design from between the world wars",
+                WW1: "An antique firearm from the dawn of modern warfare",
+                PreWW1: "A primitive firearm from before the great war",
+                NearFuture: "An advanced weapon incorporating near-future technology",
+                FarFuture: "A highly advanced weapon using technology beyond current understanding",
+                Steampunk: "A fantastical weapon powered by steam and clockwork",
+                Cyberpunk: "A high-tech weapon enhanced with cybernetic interfaces",
+                Fantasy: "A magical weapon crafted through arcane means"
+            };
+            
+            const rarityDescriptions = {
+                Common: "commonly found",
+                Uncommon: "uncommonly encountered",
+                Rare: "a rare find",
+                Elite: "an elite weapon",
+                Legendary: "a legendary artifact",
+                Artifact: "an ancient artifact"
+            };
+            
+            const classDescriptions = {
+                LMG: "light machine gun",
+                SubmachineGun: "submachine gun",
+                AssaultRifle: "assault rifle",
+                SniperRifle: "sniper rifle",
+                Shotgun: "shotgun",
+                Pistol: "pistol",
+                BattleRifle: "battle rifle",
+                DMR: "designated marksman rifle",
+                Carbine: "carbine"
+            };
+            
+            return `${eraDescriptions[era]}, the ${name} is ${rarityDescriptions[rarity]} ${classDescriptions[classType]} chambered in ${caliber}. ` +
+                   `Weighing ${weight} kg with an effective range of ${effectiveRange} meters, it features a ${magazineCapacity}-round capacity. ` +
+                   `This ${faction} design exemplifies the technological level and tactical philosophy of its origin.`;
+        }
+
+        // Function to switch between tabs
+        function switchTab(tabName) {
+            // Hide all tab contents
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Remove active class from all tabs
+            document.querySelectorAll('.tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Show the selected tab content
+            document.getElementById(`${tabName}-tab`).classList.add('active');
+            
+            // Add active class to the clicked tab
+            event.target.classList.add('active');
+        }
+
+        // Function to show export options
+        function showExportOptions() {
+            switchTab('export');
+        }
+
+        // Function to export weapon as text
+        function exportAsText() {
+            const weaponData = getCurrentWeaponData();
+            if (!weaponData) {
+                document.getElementById('exportResult').innerHTML = "<p>No weapon data to export. Generate a weapon first.</p>";
+                return;
             }
-            document.getElementById(tabName).style.display = "block";
-            evt.currentTarget.className += " active";
+            
+            let text = `WEAPON: ${weaponData.name}\n`;
+            text += `CLASS: ${weaponData.class}\n`;
+            text += `ERA: ${weaponData.era}\n`;
+            text += `FACTION: ${weaponData.faction}\n`;
+            text += `RARITY: ${weaponData.rarity}\n`;
+            text += `CALIBER: ${weaponData.caliber}\n`;
+            text += `WEIGHT: ${weaponData.weight} kg\n`;
+            text += `BARREL LENGTH: ${weaponData.barrelLength}\n`;
+            text += `MAGAZINE CAPACITY: ${weaponData.magazineCapacity} rounds\n`;
+            text += `EFFECTIVE RANGE: ${weaponData.effectiveRange} meters\n`;
+            text += `FIRE RATE: ${weaponData.fireRate}\n`;
+            text += `ACTION: ${weaponData.actionType}\n`;
+            text += `FEEDING: ${weaponData.feedingMechanism}\n`;
+            text += `FIRING MODES: ${weaponData.firingModes}\n`;
+            text += `SIGHTS: ${weaponData.sights}\n`;
+            text += `ATTACHMENT: ${weaponData.attachmentMethod}\n`;
+            text += `MATERIAL: ${weaponData.furnitureMaterial}\n`;
+            text += `DESCRIPTION: ${weaponData.description}`;
+            
+            document.getElementById('exportResult').innerHTML = `<pre>${text}</pre>`;
+        }
+
+        // Function to export weapon as JSON
+        function exportAsJSON() {
+            const weaponData = getCurrentWeaponData();
+            if (!weaponData) {
+                document.getElementById('exportResult').innerHTML = "<p>No weapon data to export. Generate a weapon first.</p>";
+                return;
+            }
+            
+            const json = JSON.stringify(weaponData, null, 2);
+            document.getElementById('exportResult').innerHTML = `<pre>${json}</pre>`;
+        }
+
+        // Function to generate a weapon card
+        function generateWeaponCard() {
+            const weaponData = getCurrentWeaponData();
+            if (!weaponData) {
+                document.getElementById('exportResult').innerHTML = "<p>No weapon data to export. Generate a weapon first.</p>";
+                return;
+            }
+            
+            const cardHTML = `
+                <div style="border: 2px solid #444; border-radius: 10px; padding: 20px; background: #252525; margin: 10px 0;">
+                    <h3 style="margin-top: 0; color: #e0e0e0;">${weaponData.name}</h3>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                        <div><strong>Class:</strong> ${weaponData.class}</div>
+                        <div><strong>Caliber:</strong> ${weaponData.caliber}</div>
+                        <div><strong>Weight:</strong> ${weaponData.weight} kg</div>
+                        <div><strong>Range:</strong> ${weaponData.effectiveRange} m</div>
+                        <div><strong>Magazine:</strong> ${weaponData.magazineCapacity} rds</div>
+                        <div><strong>Fire Rate:</strong> ${weaponData.fireRate}</div>
+                    </div>
+                    <p style="margin-top: 15px; font-style: italic;">${weaponData.description}</p>
+                </div>
+            `;
+            
+            document.getElementById('exportResult').innerHTML = cardHTML;
+        }
+
+        // Function to get current weapon data
+        function getCurrentWeaponData() {
+            const weaponDetails = document.getElementById('weaponDetails');
+            if (!weaponDetails.innerHTML || weaponDetails.innerHTML.includes('Select options')) {
+                return null;
+            }
+            
+            // This would need to be implemented to extract data from the displayed weapon
+            // For now, we'll return a placeholder
+            return {
+                name: "Sample Weapon",
+                class: "Assault Rifle",
+                era: "Modern",
+                faction: "Western",
+                rarity: "Common",
+                caliber: "5.56x45mm",
+                weight: "3.5",
+                barrelLength: "16 inches",
+                magazineCapacity: 30,
+                effectiveRange: 500,
+                fireRate: "700 RPM",
+                actionType: "Gas-operated",
+                feedingMechanism: "Box magazine",
+                firingModes: "Safe/Semi/Auto",
+                sights: "Iron sights",
+                attachmentMethod: "Picatinny rail",
+                furnitureMaterial: "Polymer",
+                description: "A standard issue assault rifle."
+            };
+        }
+
+        // Function to add weapon to history
+        function addToHistory(weaponData) {
+            if (!document.getElementById('enableHistory').checked) return;
+            
+            weaponHistory.unshift(weaponData);
+            if (weaponHistory.length > 10) {
+                weaponHistory.pop();
+            }
+            
+            updateHistoryDisplay();
+        }
+
+        // Function to update history display
+        function updateHistoryDisplay() {
+            const historyContainer = document.getElementById('weaponHistory');
+            if (weaponHistory.length === 0) {
+                historyContainer.innerHTML = '<p>No weapons generated yet.</p>';
+                return;
+            }
+            
+            historyContainer.innerHTML = weaponHistory.map((weapon, index) => `
+                <div class="history-item" onclick="loadWeaponFromHistory(${index})">
+                    <strong>${weapon.name}</strong> - ${weapon.class} (${weapon.caliber})<br>
+                    <small>${weapon.era} • ${weapon.faction} • ${weapon.rarity}</small>
+                </div>
+            `).join('');
+        }
+
+        // Function to load weapon from history
+        function loadWeaponFromHistory(index) {
+            const weapon = weaponHistory[index];
+            if (weapon) {
+                // This would need to be implemented to populate the form with the weapon data
+                alert(`Loading ${weapon.name} from history. This feature would populate the form with the weapon's data.`);
+            }
         }
 
         // Function to randomize all options
         function randomizeAll() {
-            const classes = ["LMG", "SubmachineGun", "AssaultRifle", "SniperRifle", 
-                            "Shotgun", "Pistol", "BattleRifle", "DMR", "Carbine"];
-            const eras = ["WW1", "WW2", "ColdWar", "Modern", "NearFuture", "SciFi"];
-            const origins = ["Western", "Soviet", "European", "Asian", "MiddleEastern", 
-                            "African", "SouthAmerican", "Fictional"];
-            const philosophies = ["Standard", "Lightweight", "HeavyDuty", "Modular", 
-                                "Stealth", "CostEffective", "Precision", "Reliability"];
+            const classes = Object.keys(caliberLimits);
+            const eras = Object.keys(attachmentMethods);
+            const factions = Object.keys(manufacturerNames);
+            const rarities = ["Common", "Uncommon", "Rare", "Elite", "Legendary", "Artifact"];
             
-            const selectedClass = getRandomItem(classes);
-            const selectedOrigin = getRandomItem(origins);
-            
-            document.getElementById("weaponClass").value = selectedClass;
-            document.getElementById("era").value = getRandomItem(eras);
-            document.getElementById("origin").value = selectedOrigin;
-            document.getElementById("designPhilosophy").value = getRandomItem(philosophies);
-            
-            // Generate a random name based on origin and class
-            document.getElementById("weaponName").value = generateWeaponName(selectedOrigin, selectedClass);
-            
-            // Random manufacturer (sometimes empty)
-            if (Math.random() > 0.3) {
-                document.getElementById("manufacturer").value = "";
-            } else {
-                // Simple manufacturer name generator
-                const manufacturerPrefixes = ["Global", "Precision", "Advanced", "Tactical", "Military", "Defense"];
-                const manufacturerSuffixes = ["Arms", "Systems", "Industries", "Technologies", "Corporation", "Works"];
-                document.getElementById("manufacturer").value = 
-                    `${getRandomItem(manufacturerPrefixes)} ${getRandomItem(manufacturerSuffixes)}`;
-            }
+            document.getElementById('weaponClass').value = getRandomItem(classes);
+            document.getElementById('eraSelect').value = getRandomItem(eras);
+            document.getElementById('factionSelect').value = getRandomItem(factions);
+            document.getElementById('raritySelect').value = getRandomItem(rarities);
+            document.getElementById('weaponName').value = '';
             
             generateWeapon();
         }
 
-        // Function to save the current weapon
-        function saveWeapon() {
-            const weaponElement = document.getElementById("weaponDetails");
-            if (!weaponElement.innerHTML) {
-                alert("Please generate a weapon first!");
-                return;
-            }
+        // Main function to generate a weapon
+        function generateWeapon() {
+            const weaponClass = document.getElementById('weaponClass').value;
+            const era = document.getElementById('eraSelect').value;
+            const faction = document.getElementById('factionSelect').value;
+            const rarity = document.getElementById('raritySelect').value;
+            const customName = document.getElementById('weaponName').value;
             
-            // Use in-memory storage
-            if (!window.savedWeaponsData) {
-                window.savedWeaponsData = [];
-            }
+            // Generate weapon attributes
+            const name = customName || generateWeaponName(faction, weaponClass, rarity);
+            const caliber = generateCaliber(weaponClass);
+            const magazineCapacity = generateMagazineCapacity(weaponClass);
+            const weight = generateWeaponWeight(weaponClass);
+            const effectiveRange = generateEffectiveRange(weaponClass);
+            const attachmentMethod = getRandomItem(attachmentMethods[era]);
+            const actionType = getRandomItem(actionTypes[weaponClass]);
+            const fireRate = getRandomItem(fireRates[weaponClass]);
+            const barrelLength = getRandomItem(barrelLengths[weaponClass]);
+            const feedingMechanism = getRandomItem(feedingMechanisms[weaponClass]);
+            const furnitureMaterial = getRandomItem(furnitureMaterials[era]);
+            const firingModes = getRandomItem(firingModes[era]);
+            const sights = getRandomItem(sightOptions[era]);
             
+            // Generate description if enabled
+            const enableDescriptions = document.getElementById('enableDescriptions').checked;
+            const description = enableDescriptions ? generateWeaponDescription({
+                name, class: weaponClass, caliber, weight, effectiveRange, 
+                magazineCapacity, era, rarity, faction
+            }) : '';
+            
+            // Create weapon data object
             const weaponData = {
-                name: document.getElementById("weaponName").value || "Unnamed Weapon",
-                class: document.getElementById("weaponClass").value,
-                era: document.getElementById("era").value,
-                origin: document.getElementById("origin").value,
-                manufacturer: document.getElementById("manufacturer").value,
-                designPhilosophy: document.getElementById("designPhilosophy").value,
-                html: weaponElement.innerHTML,
-                timestamp: new Date().toLocaleString()
+                name,
+                class: weaponClass,
+                era,
+                faction,
+                rarity,
+                caliber,
+                weight,
+                effectiveRange,
+                magazineCapacity,
+                barrelLength,
+                fireRate,
+                actionType,
+                feedingMechanism,
+                furnitureMaterial,
+                firingModes,
+                sights,
+                attachmentMethod,
+                description
             };
             
-            window.savedWeaponsData.push(weaponData);
+            // Add to history
+            addToHistory(weaponData);
             
-            alert("Weapon saved!");
-            displaySavedWeapons();
-        }
-
-        // Function to display saved weapons
-        function displaySavedWeapons() {
-            const savedWeapons = window.savedWeaponsData || [];
-            const container = document.getElementById("savedWeapons");
-            
-            if (savedWeapons.length === 0) {
-                container.innerHTML = "<p>No saved weapons yet.</p>";
-                return;
-            }
-            
-            container.innerHTML = savedWeapons.map((weapon, index) => `
-                <div class="weapon-item" onclick="loadSavedWeapon(${index})">
-                    <strong>${weapon.name}</strong> - ${weapon.era} ${weapon.origin} ${weapon.class}<br>
-                    <small>Saved: ${weapon.timestamp}</small>
-                </div>
-            `).join("");
-        }
-
-        // Function to load a saved weapon
-        function loadSavedWeapon(index) {
-            const savedWeapons = window.savedWeaponsData || [];
-            if (index >= 0 && index < savedWeapons.length) {
-                const weapon = savedWeapons[index];
-                document.getElementById("weaponName").value = weapon.name;
-                document.getElementById("weaponClass").value = weapon.class;
-                document.getElementById("era").value = weapon.era;
-                document.getElementById("origin").value = weapon.origin;
-                document.getElementById("manufacturer").value = weapon.manufacturer;
-                document.getElementById("designPhilosophy").value = weapon.designPhilosophy;
-                document.getElementById("weaponDetails").innerHTML = weapon.html;
-                openTab(event, 'Generator');
-            }
-        }
-
-        // Function to generate design details
-        function generateDesignDetails(weaponClass, designPhilosophy, origin, era) {
-            return `
-                <div class="design-details">
-                    <h4>Design Philosophy:</h4>
-                    <p>${getRandomItem(weaponData.designPhilosophies[designPhilosophy])}</p>
-                    <h4>Manufacturing Origin:</h4>
-                    <p>${origin} design tradition with ${era.toLowerCase()} manufacturing techniques</p>
-                    <h4>Intended Role:</h4>
-                    <p>${weaponClass.replace(/([A-Z])/g, ' $1')} designed for ${getRandomItem(["infantry support", "special operations", "standard issue", "designated marksman", "close quarters battle", "vehicle crews"])}</p>
-                </div>
-            `;
-        }
-
-        // Main weapon generation function
-        function generateWeapon() {
-            const weaponClass = document.getElementById("weaponClass").value;
-            const era = document.getElementById("era").value;
-            const origin = document.getElementById("origin").value;
-            const manufacturer = document.getElementById("manufacturer").value;
-            const weaponName = document.getElementById("weaponName").value;
-            const designPhilosophy = document.getElementById("designPhilosophy").value;
-
-            // Generate weapon attributes
-            const caliber = getRandomItem(weaponData.calibers[weaponClass]);
-            const magazineCapacity = getRandomItem(weaponData.magazineCapacities[weaponClass]);
-            const barrelLength = getRandomItem(weaponData.barrelLengths[weaponClass]);
-            const actionType = getRandomItem(weaponData.actionTypes[weaponClass]);
-            const fireRate = getRandomItem(weaponData.fireRates[weaponClass]);
-            const feedingMechanism = getRandomItem(weaponData.feedingMechanisms[weaponClass]);
-            const furniture = getRandomItem(weaponData.furnitureMaterials);
-            const attachmentMethod = getRandomItem(weaponData.attachmentMethods);
-            const weight = getRandomItem(weaponData.weights[weaponClass]);
-            const effectiveRange = getRandomItem(weaponData.effectiveRanges[weaponClass]);
-
-            // Generate final weapon name if empty
-            const finalName = weaponName || generateWeaponName(origin, weaponClass);
-
-            // Generate weapon history
-            const weaponHistory = generateWeaponHistory(era, origin, weaponClass, manufacturer, designPhilosophy);
-
-            // Generate design details
-            const designDetails = generateDesignDetails(weaponClass, designPhilosophy, origin, era);
-
             // Display the weapon
-            document.getElementById("weaponDetails").innerHTML = `
-                <h2>${finalName}</h2>
-                <div class="weapon-image">Weapon Schematic</div>
-                <div class="weapon-stats">
-                    <div class="stat-box">
-                        <div class="stat-value">${magazineCapacity}</div>
-                        <div>Magazine Capacity</div>
-                    </div>
-                    <div class="stat-box">
-                        <div class="stat-value">${weight} lbs</div>
-                        <div>Weight</div>
-                    </div>
-                    <div class="stat-box">
-                        <div class="stat-value">${effectiveRange}m</div>
-                        <div>Effective Range</div>
-                    </div>
-                </div>
-                <ul>
-                    <li><strong>Class:</strong> ${weaponClass.replace(/([A-Z])/g, ' $1')}</li>
-                    <li><strong>Caliber:</strong> ${caliber}</li>
-                    <li><strong>Barrel Length:</strong> ${barrelLength}</li>
-                    <li><strong>Action:</strong> ${actionType}</li>
-                    <li><strong>Fire Rate:</strong> ${fireRate}</li>
-                    <li><strong>Feeding:</strong> ${feedingMechanism}</li>
-                    <li><strong>Furniture:</strong> ${furniture}</li>
-                    <li><strong>Attachment System:</strong> ${attachmentMethod}</li>
-                    <li><strong>Era:</strong> ${era.replace(/([A-Z])/g, ' $1')}</li>
-                    <li><strong>Origin:</strong> ${origin.replace(/([A-Z])/g, ' $1')}</li>
-                    ${manufacturer ? `<li><strong>Manufacturer:</strong> ${manufacturer}</li>` : ''}
-                </ul>
-                <div class="weapon-history">
-                    <h3>Design History</h3>
-                    <p>${weaponHistory}</p>
-                </div>
-                ${designDetails}
-            `;
+            displayWeapon(weaponData);
+        }
 
-            // Update design details tab
-            document.getElementById("designDetailsContainer").innerHTML = designDetails;
+        // Function to display the generated weapon
+        function displayWeapon(weaponData) {
+            const weaponDetails = document.getElementById('weaponDetails');
+            
+            weaponDetails.innerHTML = `
+                <div class="weapon-card">
+                    <div class="weapon-name">${weaponData.name}</div>
+                    <div class="weapon-image">Weapon Visualization</div>
+                    <div class="weapon-stats">
+                        <div class="stat-item">
+                            <div class="stat-label">Class</div>
+                            <div class="stat-value">${weaponData.class}</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-label">Era</div>
+                            <div class="stat-value">${weaponData.era}</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-label">Faction</div>
+                            <div class="stat-value">${weaponData.faction}</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-label">Rarity</div>
+                            <div class="stat-value">${weaponData.rarity}</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-label">Caliber</div>
+                            <div class="stat-value">${weaponData.caliber}</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-label">Weight</div>
+                            <div class="stat-value">${weaponData.weight} kg</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-label">Barrel Length</div>
+                            <div class="stat-value">${weaponData.barrelLength}</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-label">Magazine Capacity</div>
+                            <div class="stat-value">${weaponData.magazineCapacity} rounds</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-label">Effective Range</div>
+                            <div class="stat-value">${weaponData.effectiveRange} meters</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-label">Fire Rate</div>
+                            <div class="stat-value">${weaponData.fireRate}</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-label">Action Type</div>
+                            <div class="stat-value">${weaponData.actionType}</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-label">Feeding Mechanism</div>
+                            <div class="stat-value">${weaponData.feedingMechanism}</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-label">Firing Modes</div>
+                            <div class="stat-value">${weaponData.firingModes}</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-label">Sights</div>
+                            <div class="stat-value">${weaponData.sights}</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-label">Attachment Method</div>
+                            <div class="stat-value">${weaponData.attachmentMethod}</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-label">Furniture Material</div>
+                            <div class="stat-value">${weaponData.furnitureMaterial}</div>
+                        </div>
+                    </div>
+                    ${weaponData.description ? `<div class="weapon-description">${weaponData.description}</div>` : ''}
+                </div>
+            `;
         }
 
         // Initialize the page
         window.onload = function() {
-            displaySavedWeapons();
+            // Set up event listeners
+            document.getElementById('detailLevel').addEventListener('input', function() {
+                document.getElementById('detailLevelValue').textContent = this.value;
+            });
+            
+            // Initialize history display
+            updateHistoryDisplay();
         };
     </script>
 </body>
