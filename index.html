@@ -357,10 +357,7 @@
             WW1: ["Drilled receiver", "Custom fabrication", "Integrated iron sights"],
             PreWW1: ["Custom fabrication", "Integrated iron sights", "No attachment points"],
             NearFuture: ["Smart rail system", "Magnetic attachment", "Integrated targeting system"],
-            FarFuture: ["Neural interface", "Holographic projection", "Molecular bonding"],
-            Steampunk: ["Brass fittings", "Gear-driven mounts", "Pressure-clamp system"],
-            Cyberpunk: ["Cyberware interface", "Smartlink system", "Neural jack"],
-            Fantasy: ["Magic enchantment", "Runic engraving", "Ancient mounting techniques"]
+            FarFuture: ["Neural interface", "Holographic projection", "Molecular bonding", "Brain-chip link"],
         };
 
         const actionTypes = {
@@ -369,7 +366,7 @@
             AssaultRifle: ["Gas-operated", "Piston-driven", "Direct impingement", "Short-stroke piston", "Long-stroke piston"],
             SniperRifle: ["Bolt-action", "Gas-operated", "Recoil-operated", "Lever-action", "Falling block"],
             Shotgun: ["Pump-action", "Semi-automatic", "Lever-action", "Break-action", "Bolt-action", "Revolver"],
-            Pistol: ["Blowback", "Short recoil", "Long recoil", "Gas-delayed blowback", "Toggle-lock"],
+            Pistol: ["Blowback", "Short recoil", "Long recoil", "Gas-delayed blowback", "Toggle-lock", "Revolver (Double-action)", "Revolver (Single-action)"],
             BattleRifle: ["Gas-operated", "Piston-driven", "Recoil-operated", "Falling block"],
             DMR: ["Gas-operated", "Bolt-action", "Piston-driven", "Short-stroke piston"],
             Carbine: ["Gas-operated", "Piston-driven", "Blowback", "Direct impingement"]
@@ -393,7 +390,7 @@
             AssaultRifle: ["10 inches", "12 inches", "14.5 inches", "16 inches", "18 inches", "20 inches"],
             SniperRifle: ["20 inches", "22 inches", "24 inches", "26 inches", "28 inches", "30 inches"],
             Shotgun: ["14 inches", "16 inches", "18 inches", "20 inches", "22 inches", "24 inches", "26 inches", "28 inches"],
-            Pistol: ["3 inches", "4 inches", "5 inches", "6 inches", "7 inches", "8 inches"],
+            Pistol: ["3 inches", "4 inches", "5 inches", "6 inches", "7 inches", "8 inches", "10 inches"],
             BattleRifle: ["16 inches", "18 inches", "20 inches", "22 inches"],
             DMR: ["18 inches", "20 inches", "22 inches", "24 inches"],
             Carbine: ["10 inches", "12 inches", "14 inches", "16 inches"]
@@ -405,7 +402,7 @@
             AssaultRifle: ["Box magazine", "Drum magazine", "Casket magazine"],
             SniperRifle: ["Box magazine", "Internal magazine", "Clip-fed", "Single shot"],
             Shotgun: ["Tube-fed", "Box magazine", "Drum magazine", "Single shot"],
-            Pistol: ["Box magazine", "Stick magazine", "Internal magazine", "Cylinder"],
+            Pistol: ["Box magazine", "Stick magazine", "Internal magazine", "Cylinder", "Drum magazine"],
             BattleRifle: ["Box magazine", "Internal magazine", "Clip-fed"],
             DMR: ["Box magazine", "Internal magazine", "Clip-fed"],
             Carbine: ["Box magazine", "Drum magazine", "Stick magazine"]
@@ -433,18 +430,15 @@
             PreWW1: ["Wood", "Brass", "Steel"],
             NearFuture: ["Polymer composite", "Carbon nanotube", "Smart material", "Ceramic composite"],
             FarFuture: ["Nanomaterial", "Liquid metal", "Energy field", "Biological composite"],
-            Steampunk: ["Polished wood", "Brass", "Copper", "Leather"],
-            Cyberpunk: ["Polymer", "Chrome", "Neon-accented composite", "Smart material"],
-            Fantasy: ["Ancient wood", "Bone", "Stone", "Mythril", "Dragon scale"]
         };
 
         // New features for world-building
         const magazineCapacities = {
-            LMG: { min: 50, max: 200 },
+            LMG: { min: 45, max: 200 },
             SubmachineGun: { min: 20, max: 50 },
             AssaultRifle: { min: 20, max: 40 },
             SniperRifle: { min: 5, max: 20 },
-            Shotgun: { min: 4, max: 12 },
+            Shotgun: { min: 4, max: 8 },
             Pistol: { min: 6, max: 20 },
             BattleRifle: { min: 10, max: 30 },
             DMR: { min: 10, max: 25 },
@@ -452,27 +446,27 @@
         };
 
         const weaponWeights = {
-            LMG: { min: 7.0, max: 12.0 },
+            LMG: { min: 7.0, max: 18.0 },
             SubmachineGun: { min: 2.0, max: 4.0 },
             AssaultRifle: { min: 3.0, max: 5.0 },
-            SniperRifle: { min: 4.0, max: 8.0 },
-            Shotgun: { min: 3.0, max: 5.0 },
+            SniperRifle: { min: 4.0, max: 15.0 },
+            Shotgun: { min: 3.0, max: 6.0 },
             Pistol: { min: 0.7, max: 1.5 },
-            BattleRifle: { min: 4.0, max: 6.0 },
+            BattleRifle: { min: 4.0, max: 7.0 },
             DMR: { min: 4.5, max: 13.0 },
-            Carbine: { min: 2.5, max: 4.5 }
+            Carbine: { min: 2.5, max: 5.5 }
         };
 
         const effectiveRanges = {
             LMG: { min: 600, max: 1500 },
             SubmachineGun: { min: 50, max: 200 },
             AssaultRifle: { min: 300, max: 600 },
-            SniperRifle: { min: 800, max: 2000 },
-            Shotgun: { min: 40, max: 100 },
+            SniperRifle: { min: 800, max: 2500 },
+            Shotgun: { min: 40, max: 150 },
             Pistol: { min: 25, max: 100 },
-            BattleRifle: { min: 500, max: 800 },
-            DMR: { min: 600, max: 1000 },
-            Carbine: { min: 200, max: 500 }
+            BattleRifle: { min: 300, max: 1000 },
+            DMR: { min: 600, max: 1500 },
+            Carbine: { min: 200, max: 700 }
         };
 
         const firingModes = {
@@ -484,15 +478,12 @@
             PreWW1: ["Selectorless (Semi-only)", "Manual action only"],
             NearFuture: ["Neural selection", "Voice command", "Smart targeting system", "Safe/Semi/Auto/Burst"],
             FarFuture: ["Thought-activated", "AI-assisted targeting", "Multiple simultaneous modes"],
-            Steampunk: ["Manual selection lever", "Pressure-based selection", "Gear-driven selector"],
-            Cyberpunk: ["Cyberware interface", "Smartlink system", "Neural selection"],
-            Fantasy: ["Mana-based activation", "Runic selection", "Will-powered"]
         };
 
         const sightOptions = {
-            Modern: ["Iron sights", "Red dot sight", "Holographic sight", "Low-power variable optic", "High-power scope", "Thermal sight"],
-            ColdWar: ["Iron sights", "Telescopic sight", "Reflex sight", "Night vision scope"],
-            WW2: ["Iron sights", "Telescopic sight", "Aperture sight"],
+            Modern: ["Iron sights", "Red dot sight", "Holographic sight", "Low-power variable optic", "High-power scope", "Thermal sight", "4x Scope"],
+            ColdWar: ["Iron sights", "Telescopic sight", "Reflex sight", "Night vision scope", "4x Scope"],
+            WW2: ["Iron sights", "Telescopic sight", "Aperture sight", "Expirimental NV Scope"],
             Interwar: ["Iron sights", "Telescopic sight"],
             WW1: ["Iron sights", "Telescopic sight"],
             PreWW1: ["Iron sights", "Open sights"],
@@ -562,15 +553,15 @@
             
             // Model numbers/names based on class and rarity
             const modelPrefixes = {
-                LMG: ["M", "MG", "LMG", "SAW"],
-                SubmachineGun: ["SMG", "MP", "UZI", "PP"],
-                AssaultRifle: ["AR", "M", "AK", "CAR"],
-                SniperRifle: ["SR", "M", "SVD", "PSG"],
-                Shotgun: ["SG", "M", "KSG", "MCS"],
-                Pistol: ["P", "M", "MK", "HP"],
-                BattleRifle: ["BR", "M", "FAL", "G3"],
-                DMR: ["DMR", "M", "SDM", "RECCE"],
-                Carbine: ["CAR", "M", "CQBR", "PDW"]
+                LMG: ["M-", "MG-", "LMG", "SAW", "Type-"],
+                SubmachineGun: ["SMG", "MP", "PP", "Type-"],
+                AssaultRifle: ["AR-", "M-", "AK-", "CAR", "Type-"],
+                SniperRifle: ["SR-", "M"-, "SVD", "PSG"," Type-"],
+                Shotgun: ["SG", "M-", "KSG", "MCS", "Type-"],
+                Pistol: ["P", "M-", "MK", "HP", "Type-"],
+                BattleRifle: ["BR", "M-", "Type-"],
+                DMR: ["DMR", "M-", "SDM", "RECCE", "Type-"],
+                Carbine: ["CAR", "M-", "CQBR", "PDW", "SR-", "Type-"]
             };
             
             const prefixes = modelPrefixes[classType] || ["M", "X"];
